@@ -1,0 +1,20 @@
+Spring-Boot
+-----------
+
+A program that demonstrates consuming Spring Boot REST APIs. The Java application is in IDEA-Projects/Spring-Boot-Rest.
+
+Creating the React Client
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Run 'npx create-vite@latest' from the application root directory.
+* Run 'npm install react-router-dom' from the client directory.
+
+Running the React application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Run 'npm run dev' from the application root directory.
+* Create a run configuration in Webstorm, type 'npm', command 'run', and scripts 'dev'.
+* Open a browser to http://localhost:5173/.
+
+Current version: 0.1.0.
+~~~~~~~~~~~~~~~~~~~~~~~
