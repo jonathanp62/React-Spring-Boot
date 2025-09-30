@@ -38,5 +38,11 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true // Allows external connections and helps in containerized environments
+  },
+  test: {
+    // Vitest configuration options
+    globals: true,
+    environment: 'jsdom',
+    css: true,
   }
 })

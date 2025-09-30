@@ -1,5 +1,5 @@
 /*
- * (#)App.jsx   0.1.0   09/29/2025
+ * (#)App.test.jsx  0.1.0   09/30/2025
  *
  * @author  Jonathan Parker
  * @version 0.1.0
@@ -28,34 +28,17 @@
  * SOFTWARE.
  */
 
-import './styles/App.css';
+import { render, screen } from '@testing-library/react';
+import { test, expect } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 
-import { Link } from 'react-router';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import App from './App';
 
-import PersonComponent from "./components/PersonComponent";
-import QuoteComponent from "./components/QuoteComponent";
-
-/**
- * The application component.
- *
- * @returns {JSX.Element}
- */
-function App() {
-    return (
-        <BrowserRouter>
-            <div className="App">
-                <h1>Spring Boot React</h1>
-                <hr/>
-                <p className="App-link"><Link to="/person">Person API</Link></p>
-                <p className="App-link"><Link to="/quote">Quote API</Link></p>
-                <Routes>
-                    <Route path="/person" element={<PersonComponent />} />
-                    <Route path="/quote" element={<QuoteComponent />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
-    );
-};
-
-export default App;
+test('renders learn react link', () => {
+    render(
+        <MemoryRouter>
+            <App />
+        </MemoryRouter>
+    );    const linkElement = screen.getByText(/person/i);
+    expect(linkElement).toBeInTheDocument();
+});

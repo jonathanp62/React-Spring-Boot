@@ -1,8 +1,8 @@
 /*
- * (#)App.jsx   0.1.0   09/29/2025
+ * (#)setupTests.jsx    0.1.0   09/30/2025
  *
  * @author  Jonathan Parker
- * @version 0.1.0
+ * @version 0.3.0
  * @since   0.1.0
  *
  * MIT License
@@ -28,34 +28,12 @@
  * SOFTWARE.
  */
 
-import './styles/App.css';
+import { afterEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
 
-import { Link } from 'react-router';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import '@testing-library/jest-dom/vitest';
 
-import PersonComponent from "./components/PersonComponent";
-import QuoteComponent from "./components/QuoteComponent";
-
-/**
- * The application component.
- *
- * @returns {JSX.Element}
- */
-function App() {
-    return (
-        <BrowserRouter>
-            <div className="App">
-                <h1>Spring Boot React</h1>
-                <hr/>
-                <p className="App-link"><Link to="/person">Person API</Link></p>
-                <p className="App-link"><Link to="/quote">Quote API</Link></p>
-                <Routes>
-                    <Route path="/person" element={<PersonComponent />} />
-                    <Route path="/quote" element={<QuoteComponent />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
-    );
-};
-
-export default App;
+// Runs cleanup after each test case (e.g., clearing jsdom)
+afterEach(() => {
+    cleanup();
+});
