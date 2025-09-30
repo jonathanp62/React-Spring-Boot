@@ -17,5 +17,19 @@ Running the React application
 * Create a run configuration in Webstorm, type 'npm', command 'run', and scripts 'dev'.
 * Open a browser to http://localhost:3000/. The default port of 5173 is not being used as the Java REST services have allowed CORS on port 3000.
 
+Using Process Manager 2 (PM2)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run PM2 commands from the application root directory.
+
+[options="header"]
+|=======================
+|Description   |Command
+|Start the app |pm2 start ecosystem.config.cjs
+|List apps     |pm2 list
+|Stop the app  |pm2 stop spring-boot
+|Delete the app|pm2 delete spring-boot
+|=======================
+
 Current version: 0.1.0.
 ~~~~~~~~~~~~~~~~~~~~~~~

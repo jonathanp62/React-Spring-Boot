@@ -34,6 +34,7 @@ import { Link } from 'react-router';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import PersonComponent from "./components/PersonComponent";
+import QuoteComponent from "./components/QuoteComponent";
 
 function App() {
     return (
@@ -42,8 +43,10 @@ function App() {
                 <h1>Spring Boot React</h1>
                 <hr/>
                 <p className="App-link"><Link to="/person">Person API</Link></p>
+                <p className="App-link"><Link to="/quote">Quote API</Link></p>
                 <Routes>
                     <Route path="/person" element={<PersonComponent />} />
+                    <Route path="/quote" element={<QuoteComponent />} />
                 </Routes>
             </div>
         </BrowserRouter>

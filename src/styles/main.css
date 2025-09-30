@@ -55,6 +55,8 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   min-width: 320px;
   min-height: 100vh;

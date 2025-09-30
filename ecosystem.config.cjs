@@ -31,8 +31,14 @@
 module.exports = {
   apps : [{
     name: 'spring-boot',
-    script: 'src/App.jsx',
-    watch: '.'
+    script: 'npm',
+    args: ["run", "dev"],
+    cwd: "./",
+    watch: true,
+    ignore_watch: ["node_modules"], // Ignore node_modules to prevent unnecessary restarts
+    env: {
+      NODE_ENV: "development",
+    }
   }],
 
   deploy : {
