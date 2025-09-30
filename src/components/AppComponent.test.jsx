@@ -1,8 +1,8 @@
 /*
- * (#)vite.config.js    0.1.0   09/29/2025
+ * (#)AppComponent.test.jsx 0.1.0   09/30/2025
  *
  * @author  Jonathan Parker
- * @version 0.3.0
+ * @version 0.1.0
  * @since   0.1.0
  *
  * MIT License
@@ -28,22 +28,22 @@
  * SOFTWARE.
  */
 
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { render, screen } from '@testing-library/react';
+import { test, expect } from 'vitest';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
-// https://vite.dev/config/
+import AppComponent from './AppComponent';
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 3000,
-    host: true // Allows external connections and helps in containerized environments
-  },
-  test: {
-    // Vitest configuration options
-    globals: true,
-    environment: 'jsdom',
-    css: true,
-    setupFiles: './src/setupTests.jsx',
-  }
-})
+test('Renders links to the APIs', () => {
+    render(
+        <MemoryRouter>
+            <AppComponent />
+        </MemoryRouter>
+    );
+
+    const personLinkElement = screen.getByText(/person/i);
+    const quoteLinkElement = screen.getByText(/quote/i);
+
+    expect(personLinkElement).toBeInTheDocument();
+    expect(quoteLinkElement).toBeInTheDocument();
+});

@@ -22,6 +22,8 @@ Running the React Application
 Testing the React Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* Run 'npm test'
+
 Using Process Manager 2 (PM2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
