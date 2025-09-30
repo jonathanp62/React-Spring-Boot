@@ -30,6 +30,12 @@
 
 import React, { useState } from "react";
 
+/**
+ * The person deleter component.
+ *
+ * @param   onRefresh
+ * @returns {React.JSX.Element}
+ */
 const PersonDeleter = ({ onRefresh }) => {
     const [message, setMessage] = useState(null);
     const [personId, setPersonId] = useState('');

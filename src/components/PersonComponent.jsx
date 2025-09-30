@@ -36,6 +36,11 @@ import PersonCreator from "./PersonCreator.jsx";
 import PersonDeleter from "./PersonDeleter.jsx";
 import PersonFinder from "./PersonFinder.jsx";
 
+/**
+ * The person component.
+ *
+ * @returns {React.JSX.Element}
+ */
 const PersonComponent = () => {
     const [ok, setOk] = useState(null);
     const [people, setPeople] = useState(null);

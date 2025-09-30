@@ -30,6 +30,11 @@
 
 import React, { useState } from "react";
 
+/**
+ * The quote finder component.
+ *
+ * @returns {React.JSX.Element}
+ */
 const QuoteFinder = () => {
     const [message, setMessage] = useState(null);
     const [quoteId, setQuoteId] = useState('');

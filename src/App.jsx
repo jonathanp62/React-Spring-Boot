@@ -36,6 +36,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PersonComponent from "./components/PersonComponent";
 import QuoteComponent from "./components/QuoteComponent";
 
+/**
+ * The application component.
+ *
+ * @returns {JSX.Element}
+ */
 function App() {
     return (
         <BrowserRouter>

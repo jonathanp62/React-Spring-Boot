@@ -32,6 +32,12 @@ import "./Tables.css";
 
 import React, { useState } from "react";
 
+/**
+ * The person creator component.
+ *
+ * @param   onRefresh
+ * @returns {React.JSX.Element}
+ */
 const PersonCreator = ({ onRefresh }) => {
     const [error, setError] = useState(null);
 

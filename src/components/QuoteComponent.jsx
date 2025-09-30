@@ -34,6 +34,11 @@ import React, { useState, useEffect } from 'react';
 
 import QuoteFinder from "./QuoteFinder.jsx";
 
+/**
+ * The quote component.
+ *
+ * @returns {React.JSX.Element}
+ */
 const QuoteComponent = () => {
     const [ok, setOk] = useState(null);
     const [random, setRandom] = useState(null);

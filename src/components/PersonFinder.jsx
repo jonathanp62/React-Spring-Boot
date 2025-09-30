@@ -30,6 +30,11 @@
 
 import React, { useState } from "react";
 
+/**
+ * The person finder component.
+ *
+ * @returns {React.JSX.Element}
+ */
 const PersonFinder = () => {
     const [message, setMessage] = useState(null);
     const [personId, setPersonId] = useState('');
