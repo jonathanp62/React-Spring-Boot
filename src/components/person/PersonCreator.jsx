@@ -28,7 +28,7 @@
  * SOFTWARE.
  */
 
-import "../Tables.css";
+import "../styles/Tables.css";
 
 import React, { useState } from "react";
 
