@@ -33,8 +33,8 @@ import '../styles/App.css';
 import { Link } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 
-import PersonComponent from "./PersonComponent";
-import QuoteComponent from "./QuoteComponent";
+import PersonComponent from "./person/PersonComponent.jsx";
+import QuoteComponent from "./quote/QuoteComponent.jsx";
 
 /**
  * The application component.
