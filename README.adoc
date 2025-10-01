@@ -1,7 +1,7 @@
 Spring-Boot
 -----------
 
-A program that demonstrates consuming Spring Boot REST APIs. The Java application is in IDEA-Projects/Spring-Boot-Rest.
+A program that demonstrates consuming Spring Boot REST APIs. The Java application is in IDEA-Projects/Spring-Boot-React.
 
 Creating the React Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10,24 +10,25 @@ Creating the React Application
 * Run 'npm install react-router' from the application root directory.
 * Run 'npm install react-router-dom' from the application root directory.
 * Run 'npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom'
-* Run 'npm ls'
+* Run 'npm ls' from the application root directory.
 
 Running the React Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Run 'npm run dev' from the application root directory.
 * Create a run configuration in Webstorm, type 'npm', command 'run', and scripts 'dev'.
-* Open a browser to http://localhost:3000/. The default port of 5173 is not being used as the Java REST services have allowed CORS on port 3000.
+* Open a browser to http://localhost:3000/. The default port of 5173 is not being used as the Java REST services have allowed CORS for location http://localhost:3000.
 
 Testing the React Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Run 'npm test'
+* Run 'npm test' from the application root directory.
 
 Using Process Manager 2 (PM2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run PM2 commands from the application root directory.
+* Run 'npm install pm2 -g' from your home directory once for the system.
+* Run PM2 commands from the application root directory.
 
 [options="header"]
 |=======================
@@ -36,6 +37,7 @@ Run PM2 commands from the application root directory.
 |List apps     |pm2 list
 |Stop the app  |pm2 stop spring-boot
 |Delete the app|pm2 delete spring-boot
+|Show the logs |pm2 logs
 |=======================
 
 Current version: 0.1.0.
