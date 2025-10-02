@@ -1,5 +1,5 @@
 /*
- * (#)QuoteComponent.jsx    0.1.0   09/30/2025
+ * (#)QuoteOk.jsx   0.1.0   10/02/2025
  *
  * @author  Jonathan Parker
  * @version 0.1.0
@@ -28,21 +28,15 @@
  * SOFTWARE.
  */
 
-import "../styles/Tables.css";
-
 import React, { useState, useEffect } from 'react';
 
-import QuoteFinder from "./QuoteFinder.jsx";
-import QuoteOk from "./QuoteOk.jsx";
-import QuoteRandom from "./QuoteRandom.jsx";
-
 /**
- * The quote component.
+ * The quote ok component.
  *
  * @returns {React.JSX.Element}
  */
-const QuoteComponent = () => {
-    const [all, setAll] = useState(null);
+const QuoteOk = () => {
+    const [ok, setOk] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -53,15 +47,15 @@ const QuoteComponent = () => {
                 // To wait on a single fetch: const response = await fetch('http://localhost:8080/api/person/ok');
 
                 const [response] = await Promise.all([
-                    fetch('http://localhost:8080/api/quote/all')
+                    fetch('http://localhost:8080/api/quote/ok')
                 ]);
 
-                if (response.ok) {
+                if (response) {
                     const result = await response.json();
 
-                    setAll(result);
+                    setOk(result);
                 } else if (!response.ok) {
-                    setError(`All API HTTP error: ${response.status}`);
+                    setError(`OK API HTTP error: ${response.status}`);
                 }
             } catch (e) {
                 setError(e.message);
@@ -83,23 +77,9 @@ const QuoteComponent = () => {
 
     return (
         <div>
-            <h2>Quote API</h2>
-            <QuoteOk />
-            <QuoteRandom />
-            <table className="table-container">
-                <tbody>
-                {all.map((quote) => (
-                    <tr key={quote.value.id}>
-                        <td>{quote.value.id}</td>
-                        <td>{quote.value.text}</td>
-                        <td>{quote.type}</td>
-                    </tr>))}
-                </tbody>
-            </table>
-            <p/>
-            <QuoteFinder />
+            <p>{ok.value.text}: {ok.type}</p>
         </div>
     );
 };
 
-export default QuoteComponent;
+export default QuoteOk;
