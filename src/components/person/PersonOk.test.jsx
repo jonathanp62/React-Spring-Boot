@@ -31,6 +31,8 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 
+import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+
 import PersonOk from './PersonOk';
 
 globalThis.fetch = vi.fn();
@@ -46,7 +48,7 @@ describe('Person OK component', () => {
         const mockResponse = {
             ok: true,
             status: 200,
-            text: () => Promise.resolve(mockOk),
+            text: () => Promise.resolve(mockOk)
         };
 
         globalThis.fetch.mockResolvedValueOnce(mockResponse);
@@ -62,6 +64,25 @@ describe('Person OK component', () => {
         });
 
         // Optionally, assert that fetch was called with the correct URL
-        expect(globalThis.fetch).toHaveBeenCalledWith('http://localhost:8080/api/person/ok');
+        expect(globalThis.fetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.OK);
+    });
+
+    it('Should display an error on an unsuccessful fetch', async () => {
+        const mockResponse = {
+            ok: false,
+            status: 500
+        };
+
+        globalThis.fetch.mockResolvedValueOnce(mockResponse);
+
+        render(<PersonOk />);
+
+        expect(screen.getByText('Loading ok...')).toBeInTheDocument();
+
+        await waitFor(() => {
+            expect(screen.getByText(/OK API HTTP error: 500/i)).toBeInTheDocument();
+        });
+
+        expect(globalThis.fetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.OK);
     });
 });

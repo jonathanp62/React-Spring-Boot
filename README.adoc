@@ -22,7 +22,8 @@ Running the React Application
 Testing the React Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Run 'npm test' from the application root directory.
+* Run 'npm test' from the application root directory. This sets up a continuous watch and needs to be quit at the console.
+* Run 'CI=true npm test' to simply run the tests and exit.
 
 Using Process Manager 2 (PM2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
