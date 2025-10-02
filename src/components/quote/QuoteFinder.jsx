@@ -30,6 +30,8 @@
 
 import React, { useState } from "react";
 
+import {API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The quote finder component.
  *
@@ -48,7 +50,7 @@ const QuoteFinder = () => {
                 setQuote(null);
                 setMessage(null);
 
-                const response = await fetch(`http://localhost:8080/api/quote/${quoteId}`);
+                const response = await fetch(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(quoteId));
 
                 if (response.ok) {
                     const data = await response.json();

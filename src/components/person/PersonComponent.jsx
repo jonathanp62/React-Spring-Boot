@@ -37,6 +37,8 @@ import PersonDeleter from "./PersonDeleter.jsx";
 import PersonFinder from "./PersonFinder.jsx";
 import PersonOk from "./PersonOk.jsx";
 
+import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The person component.
  *
@@ -56,7 +58,7 @@ const PersonComponent = () => {
         const fetchData = async () => {
             try {
                 const [response] = await Promise.all([
-                    fetch('http://localhost:8080/api/person/people')
+                    fetch(API_PERSON_ENDPOINTS.PEOPLE)
                 ]);
 
                 if (response.ok) {
@@ -64,7 +66,7 @@ const PersonComponent = () => {
 
                     setPeople(result);
                 } else if (!response.ok) {
-                    setError(`People API HTTP error: ${responsePeople.status}`);
+                    setError(`People API HTTP error: ${response.status}`);
                 }
             } catch (e) {
                 setError(e.message);

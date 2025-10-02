@@ -30,6 +30,8 @@
 
 import React, { useState } from "react";
 
+import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The person finder component.
  *
@@ -48,7 +50,7 @@ const PersonFinder = () => {
                 setPerson(null);
                 setMessage(null);
 
-                const response = await fetch(`http://localhost:8080/api/person/${personId}`);
+                const response = await fetch(API_PERSON_ENDPOINTS.PERSON_BY_ID(personId));
 
                 if (response.ok) {
                     const data = await response.json();

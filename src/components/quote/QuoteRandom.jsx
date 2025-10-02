@@ -30,6 +30,8 @@
 
 import React, { useState, useEffect } from 'react';
 
+import {API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The quote random component.
  *
@@ -44,7 +46,7 @@ const QuoteRandom = () => {
         // Define an async function to perform the fetch
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/quote/random');
+                const response = await fetch(API_QUOTE_ENDPOINTS.RANDOM);
 
                 if (response.ok) {
                     const result = await response.json();

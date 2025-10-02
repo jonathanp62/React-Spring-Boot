@@ -30,6 +30,8 @@
 
 import React, { useState } from "react";
 
+import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The person deleter component.
  *
@@ -47,7 +49,7 @@ const PersonDeleter = ({ onRefresh }) => {
             try {
                 setMessage(null);
 
-                const response = await fetch(`http://localhost:8080/api/person/${personId}`, {
+                const response = await fetch(API_PERSON_ENDPOINTS.PERSON_BY_ID(personId), {
                     method: 'DELETE'
                 });
 

@@ -36,6 +36,8 @@ import QuoteFinder from "./QuoteFinder.jsx";
 import QuoteOk from "./QuoteOk.jsx";
 import QuoteRandom from "./QuoteRandom.jsx";
 
+import {API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The quote component.
  *
@@ -51,7 +53,7 @@ const QuoteComponent = () => {
         const fetchData = async () => {
             try {
                 const [response] = await Promise.all([
-                    fetch('http://localhost:8080/api/quote/all')
+                    fetch(API_QUOTE_ENDPOINTS.ALL)
                 ]);
 
                 if (response.ok) {

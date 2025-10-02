@@ -32,6 +32,8 @@ import "../styles/Tables.css";
 
 import React, { useState } from "react";
 
+import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The person creator component.
  *
@@ -62,7 +64,7 @@ const PersonCreator = ({ onRefresh }) => {
 
         const savePerson = async() => {
             try {
-                const response = await fetch(`http://localhost:8080/api/person`, {
+                const response = await fetch(API_PERSON_ENDPOINTS.ROOT, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

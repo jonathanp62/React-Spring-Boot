@@ -30,6 +30,8 @@
 
 import React, { useState, useEffect } from 'react';
 
+import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+
 /**
  * The person OK component.
  *
@@ -43,7 +45,7 @@ const PersonOk = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/person/ok');
+                const response = await fetch(API_PERSON_ENDPOINTS.OK);
 
                 if (response.ok) {
                     const result = await response.text();
