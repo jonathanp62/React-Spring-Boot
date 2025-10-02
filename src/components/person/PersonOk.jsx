@@ -1,5 +1,5 @@
 /*
- * (#)PersonComponent.jsx   0.1.0   09/30/2025
+ * (#)PersonOk.jsx  0.1.0   10/02/2025
  *
  * @author  Jonathan Parker
  * @version 0.1.0
@@ -28,43 +28,31 @@
  * SOFTWARE.
  */
 
-import "../styles/Tables.css";
-
 import React, { useState, useEffect } from 'react';
 
-import PersonCreator from "./PersonCreator.jsx";
-import PersonDeleter from "./PersonDeleter.jsx";
-import PersonFinder from "./PersonFinder.jsx";
-import PersonOk from "./PersonOk.jsx";
-
 /**
- * The person component.
+ * The person OK component.
  *
  * @returns {React.JSX.Element}
  */
-const PersonComponent = () => {
-    const [people, setPeople] = useState(null);
+const PersonOk = () => {
+    const [ok, setOk] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [refreshKey, setRefreshKey] = useState(0);
-
-    const triggerRefresh = () => {
-        setRefreshKey(prev => prev + 1); // Changing state triggers re-render
-    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [response] = await Promise.all([
-                    fetch('http://localhost:8080/api/person/people')
+                    fetch('http://localhost:8080/api/person/ok')
                 ]);
 
                 if (response.ok) {
-                    const result = await response.json();
+                    const result = await response.text();
 
-                    setPeople(result);
+                    setOk(result);
                 } else if (!response.ok) {
-                    setError(`People API HTTP error: ${responsePeople.status}`);
+                    setError(`OK API HTTP error: ${response.status}`);
                 }
             } catch (e) {
                 setError(e.message);
@@ -74,7 +62,7 @@ const PersonComponent = () => {
         };
 
         fetchData();
-    }, [refreshKey]);   // Re-render when refreshKey changes
+    }, []); // The empty dependency array ensures this effect runs only once
 
     if (isLoading) {
         return <div>Loading ok...</div>;
@@ -86,27 +74,9 @@ const PersonComponent = () => {
 
     return (
         <div>
-            <h2>Person API</h2>
-            <PersonOk />
-            <table className="table-container">
-                <tbody>
-                {people.map((person) => (
-                    <tr key={person.id}>
-                        <td>{person.id}</td>
-                        <td>{person.firstName} {person.lastName}</td>
-                        <td>{person.phoneNumber}</td>
-                        <td>{person.emailAddress}</td>
-                    </tr>))}
-                </tbody>
-            </table>
-            <p/>
-            <PersonFinder />
-            <p/>
-            <PersonCreator onRefresh={triggerRefresh}/>
-            <p/>
-            <PersonDeleter onRefresh={triggerRefresh}/>
+            <p>OK API: {ok}</p>
         </div>
     );
 };
 
-export default PersonComponent;
+export default PersonOk;
