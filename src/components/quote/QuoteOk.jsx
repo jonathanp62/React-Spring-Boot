@@ -36,7 +36,7 @@ import React, { useState, useEffect } from 'react';
  * @returns {React.JSX.Element}
  */
 const QuoteOk = () => {
-    const [ok, setOk] = useState(null);
+    const [quote, setQuote] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -44,16 +44,12 @@ const QuoteOk = () => {
         // Define an async function to perform the fetch
         const fetchData = async () => {
             try {
-                // To wait on a single fetch: const response = await fetch('http://localhost:8080/api/person/ok');
-
-                const [response] = await Promise.all([
-                    fetch('http://localhost:8080/api/quote/ok')
-                ]);
+                const response = await fetch('http://localhost:8080/api/quote/ok');
 
                 if (response) {
                     const result = await response.json();
 
-                    setOk(result);
+                    setQuote(result);
                 } else if (!response.ok) {
                     setError(`OK API HTTP error: ${response.status}`);
                 }
@@ -77,7 +73,7 @@ const QuoteOk = () => {
 
     return (
         <div>
-            <p>{ok.value.text}: {ok.type}</p>
+            <p>{quote.value.text}: {quote.type}</p>
         </div>
     );
 };

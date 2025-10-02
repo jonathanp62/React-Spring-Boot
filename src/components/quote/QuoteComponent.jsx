@@ -42,7 +42,7 @@ import QuoteRandom from "./QuoteRandom.jsx";
  * @returns {React.JSX.Element}
  */
 const QuoteComponent = () => {
-    const [all, setAll] = useState(null);
+    const [quotes, setQuotes] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -50,8 +50,6 @@ const QuoteComponent = () => {
         // Define an async function to perform the fetch
         const fetchData = async () => {
             try {
-                // To wait on a single fetch: const response = await fetch('http://localhost:8080/api/person/ok');
-
                 const [response] = await Promise.all([
                     fetch('http://localhost:8080/api/quote/all')
                 ]);
@@ -59,7 +57,7 @@ const QuoteComponent = () => {
                 if (response.ok) {
                     const result = await response.json();
 
-                    setAll(result);
+                    setQuotes(result);
                 } else if (!response.ok) {
                     setError(`All API HTTP error: ${response.status}`);
                 }
@@ -88,7 +86,7 @@ const QuoteComponent = () => {
             <QuoteRandom />
             <table className="table-container">
                 <tbody>
-                {all.map((quote) => (
+                {quotes.map((quote) => (
                     <tr key={quote.value.id}>
                         <td>{quote.value.id}</td>
                         <td>{quote.value.text}</td>

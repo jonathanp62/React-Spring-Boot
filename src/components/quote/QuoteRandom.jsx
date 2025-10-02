@@ -36,7 +36,7 @@ import React, { useState, useEffect } from 'react';
  * @returns {React.JSX.Element}
  */
 const QuoteRandom = () => {
-    const [random, setRandom] = useState(null);
+    const [quote, setQuote] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -44,16 +44,12 @@ const QuoteRandom = () => {
         // Define an async function to perform the fetch
         const fetchData = async () => {
             try {
-                // To wait on a single fetch: const response = await fetch('http://localhost:8080/api/person/ok');
-
-                const [response] = await Promise.all([
-                    fetch('http://localhost:8080/api/quote/random')
-                ]);
+                const response = await fetch('http://localhost:8080/api/quote/random');
 
                 if (response.ok) {
                     const result = await response.json();
 
-                    setRandom(result);
+                    setQuote(result);
                 } else if (!response.ok) {
                     setError(`Random API HTTP error: ${response.status}`);
                 }
@@ -77,7 +73,7 @@ const QuoteRandom = () => {
 
     return (
         <div>
-            <p>Random {random.value.id}: {random.type} - {random.value.text}</p>
+            <p>Random {quote.value.id}: {quote.type} - {quote.value.text}</p>
         </div>
     );
 };

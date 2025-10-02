@@ -43,9 +43,7 @@ const PersonOk = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [response] = await Promise.all([
-                    fetch('http://localhost:8080/api/person/ok')
-                ]);
+                const response = await fetch('http://localhost:8080/api/person/ok');
 
                 if (response.ok) {
                     const result = await response.text();
