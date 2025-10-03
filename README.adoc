@@ -30,6 +30,7 @@ Using Process Manager 2 (PM2)
 
 * Run 'npm install pm2 -g' from your home directory once for the system.
 * Run PM2 commands from the application root directory.
+* Make sure that the $HOME/.pm2 directory is a part of the backups.
 
 [options="header"]
 |=======================
