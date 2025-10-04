@@ -79,4 +79,58 @@ describe('Person finder component', () => {
             expect(screen.getByText('James Kirk')).toBeInTheDocument();
         });
     });
+
+    it('Should display a message when a person is not found', async () => {
+        const mockMessage = 'Person 0 not found';
+
+        // Mock a successful fetch response
+        mockFetch.mockResolvedValueOnce({
+            ok: false,
+            status: 404,
+            text: () => Promise.resolve(mockMessage),
+        });
+
+        render(<PersonFinder />);
+
+        // Populate the form fields
+        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '0' } });
+
+        // Submit the form
+        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+
+        await waitFor(() => {
+            // Assert that fetch was called correctlyusing GET method
+            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(0));
+
+            // Assert that the found person's name is displayed
+            expect(screen.getByText('Person 0 not found')).toBeInTheDocument();
+        });
+    });
+
+    it('Should display a message when an error occurs', async () => {
+        const mockMessage = 'HTTP error: Status: 500';
+
+        // Mock a successful fetch response
+        mockFetch.mockResolvedValueOnce({
+            ok: false,
+            status: 500,
+            text: () => Promise.resolve(mockMessage),
+        });
+
+        render(<PersonFinder />);
+
+        // Populate the form fields
+        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '1' } });
+
+        // Submit the form
+        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+
+        await waitFor(() => {
+            // Assert that fetch was called correctlyusing GET method
+            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(1));
+
+            // Assert that the found person's name is displayed
+            expect(screen.getByText('HTTP error: Status: 500')).toBeInTheDocument();
+        });
+    });
 });
