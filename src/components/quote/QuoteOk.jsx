@@ -48,11 +48,11 @@ const QuoteOk = () => {
             try {
                 const response = await fetch(API_QUOTE_ENDPOINTS.OK);
 
-                if (response) {
+                if (response.ok) {
                     const result = await response.json();
 
                     setQuote(result);
-                } else if (!response.ok) {
+                } else {
                     setError(`OK API HTTP error: ${response.status}`);
                 }
             } catch (e) {
