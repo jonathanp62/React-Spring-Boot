@@ -28,16 +28,20 @@
  * SOFTWARE.
  */
 
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 
 import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
 
 import PersonOk from './PersonOk';
 
-globalThis.fetch = vi.fn();
+const mockFetch = vi.fn();
 
 describe('Person OK component', () => {
+    beforeEach(() => {
+        globalThis.fetch = mockFetch;
+    });
+
     afterEach(() => {
         vi.clearAllMocks();
     });
@@ -51,7 +55,7 @@ describe('Person OK component', () => {
             text: () => Promise.resolve(mockOk)
         };
 
-        globalThis.fetch.mockResolvedValueOnce(mockResponse);
+        mockFetch.mockResolvedValueOnce(mockResponse);
 
         render(<PersonOk />);
 
