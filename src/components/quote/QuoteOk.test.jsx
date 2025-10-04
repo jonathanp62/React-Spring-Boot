@@ -37,7 +37,7 @@ import QuoteOk from './QuoteOk';
 
 const mockFetch = vi.fn();
 
-describe('Person OK component', () => {
+describe('Quote OK component', () => {
     beforeEach(() => {
         globalThis.fetch = mockFetch;
     });

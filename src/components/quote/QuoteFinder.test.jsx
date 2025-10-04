@@ -1,5 +1,5 @@
 /*
- * (#)PersonFinder.test.jsx 0.1.0   10/03/2025
+ * (#)QuoteFinder.test.jsx 0.1.0   10/03/2025
  *
  * @author  Jonathan Parker
  * @version 0.1.0
@@ -31,13 +31,13 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
 
-import PersonFinder from './PersonFinder';
+import QuoteFinder from './QuoteFinder';
 
 const mockFetch = vi.fn();
 
-describe('Person finder component', () => {
+describe('Quote finder component', () => {
     beforeEach(() => {
         globalThis.fetch = mockFetch;
     });
@@ -46,42 +46,41 @@ describe('Person finder component', () => {
         vi.clearAllMocks();
     });
 
-    it('Should display a name on successful fetch', async () => {
-        const mockPerson = {
-            status: 'OK',
-            id: 2,
-            lastName: 'Kirk',
-            firstName: 'James',
-            phoneNumber: '555-234-5678',
-            emailAddress: 'james@domain.com'
+    it('Should display a quote on successful fetch', async () => {
+        const mockQuote = {
+            value: {
+                id: 9,
+                text: 'So easy it is to switch container in #springboot.'
+            },
+            type: 'success'
         };
 
         // Mock a successful fetch response
         mockFetch.mockResolvedValueOnce({
             ok: true,
             status: 200,
-            json: () => Promise.resolve(mockPerson),
+            json: () => Promise.resolve(mockQuote),
         });
 
-        render(<PersonFinder />);
+        render(<QuoteFinder />);
 
         // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '2' } });
+        fireEvent.change(screen.getByLabelText(/Quote ID:/i), { target: { value: '9' } });
 
         // Submit the form
         fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(2));
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(9));
 
-            // Assert that the found person's name is displayed
-            expect(screen.getByText('James Kirk')).toBeInTheDocument();
+            // Assert that the found quote is displayed
+            expect(screen.getByText('So easy it is to switch container in #springboot.')).toBeInTheDocument();
         });
     });
 
-    it('Should display a message when a person is not found', async () => {
-        const mockMessage = 'Person 0 not found';
+    it('Should display a message when a quote is not found', async () => {
+        const mockMessage = 'Quote 0 not found';
 
         // Mock a not found fetch response
         mockFetch.mockResolvedValueOnce({
@@ -90,20 +89,20 @@ describe('Person finder component', () => {
             text: () => Promise.resolve(mockMessage),
         });
 
-        render(<PersonFinder />);
+        render(<QuoteFinder />);
 
         // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '0' } });
+        fireEvent.change(screen.getByLabelText(/Quote ID:/i), { target: { value: '0' } });
 
         // Submit the form
         fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(0));
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(0));
 
             // Assert that the not found message is displayed
-            expect(screen.getByText('Person 0 not found')).toBeInTheDocument();
+            expect(screen.getByText('Quote 0 not found')).toBeInTheDocument();
         });
     });
 
@@ -117,17 +116,17 @@ describe('Person finder component', () => {
             text: () => Promise.resolve(mockMessage),
         });
 
-        render(<PersonFinder />);
+        render(<QuoteFinder />);
 
         // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '1' } });
+        fireEvent.change(screen.getByLabelText(/Quote ID:/i), { target: { value: '9' } });
 
         // Submit the form
         fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(1));
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(9));
 
             // Assert that the error message is displayed
             expect(screen.getByText('HTTP error: Status: 500')).toBeInTheDocument();
