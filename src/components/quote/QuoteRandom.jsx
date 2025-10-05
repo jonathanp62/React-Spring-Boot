@@ -52,7 +52,7 @@ const QuoteRandom = () => {
                     const result = await response.json();
 
                     setQuote(result);
-                } else if (!response.ok) {
+                } else {
                     setError(`Random API HTTP error: ${response.status}`);
                 }
             } catch (e) {
