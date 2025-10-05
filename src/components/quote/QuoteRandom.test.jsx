@@ -70,11 +70,10 @@ describe('Quote random component', () => {
 
         // Wait for the mock fetch to resolve and the UI to update
         await waitFor(() => {
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.RANDOM);
+
             expect(screen.getByText(/So easy it is to switch container in #springboot./i)).toBeInTheDocument();
         });
-
-        // Optionally, assert that fetch was called with the correct URL
-        expect(globalThis.fetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.RANDOM);
     });
 
     it('Should display an error on an unsuccessful fetch', async () => {
@@ -83,16 +82,16 @@ describe('Quote random component', () => {
             status: 500
         };
 
-        globalThis.fetch.mockResolvedValueOnce(mockResponse);
+        mockFetch.mockResolvedValueOnce(mockResponse);
 
         render(<QuoteRandom />);
 
         expect(screen.getByText('Loading ok...')).toBeInTheDocument();
 
         await waitFor(() => {
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.RANDOM);
+
             expect(screen.getByText(/Random API HTTP error: 500/i)).toBeInTheDocument();
         });
-
-        expect(globalThis.fetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.RANDOM);
     });
 });

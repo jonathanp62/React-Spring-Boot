@@ -70,11 +70,10 @@ describe('Quote OK component', () => {
 
         // Wait for the mock fetch to resolve and the UI to update
         await waitFor(() => {
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.OK);
+
             expect(screen.getByText(/OK: success/i)).toBeInTheDocument();
         });
-
-        // Optionally, assert that fetch was called with the correct URL
-        expect(globalThis.fetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.OK);
     });
 
     it('Should display an error on an unsuccessful fetch', async () => {
@@ -83,16 +82,16 @@ describe('Quote OK component', () => {
             status: 500
         };
 
-        globalThis.fetch.mockResolvedValueOnce(mockResponse);
+        mockFetch.mockResolvedValueOnce(mockResponse);
 
         render(<QuoteOk />);
 
         expect(screen.getByText('Loading ok...')).toBeInTheDocument();
 
         await waitFor(() => {
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.OK);
+
             expect(screen.getByText(/OK API HTTP error: 500/i)).toBeInTheDocument();
         });
-
-        expect(globalThis.fetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.OK);
     });
 });

@@ -1,5 +1,5 @@
 /*
- * (#)PersonOk.test.jsx 0.1.0   10/02/2025
+ * (#)QuoteComponent.test.jsx   0.1.0   10/05/2025
  *
  * @author  Jonathan Parker
  * @version 0.1.0
@@ -29,15 +29,15 @@
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
 
-import PersonOk from './PersonOk';
+import QuoteComponent from './QuoteComponent.jsx';
 
 const mockFetch = vi.fn();
 
-describe('Person OK component', () => {
+describe('Quote component', () => {
     beforeEach(() => {
         globalThis.fetch = mockFetch;
     });
@@ -46,46 +46,43 @@ describe('Person OK component', () => {
         vi.clearAllMocks();
     });
 
-    it('Should display OK on successful fetch', async () => {
-        const mockOk = 'OK';
+    it('Should display all quotes on successful fetch', async () => {
+        const mockQuotes = [
+            {
+                value: {
+                    id: 9,
+                    text: 'So easy it is to switch container in #springboot.'
+                },
+                type: 'success'
+            },
+            {
+                value: {
+                    id: 10,
+                    text: 'Really loving Spring Boot, makes stand alone Spring apps easy.'
+                },
+                type: 'success'
+            }
+        ];
 
-        const mockResponse = {
+        // Mock a successful fetch response
+        mockFetch.mockResolvedValueOnce({
             ok: true,
             status: 200,
-            text: () => Promise.resolve(mockOk)
-        };
+            json: () => Promise.resolve(mockQuotes),
+        });
 
-        mockFetch.mockResolvedValueOnce(mockResponse);
-
-        render(<PersonOk />);
+        render(<QuoteComponent />);
 
         // Check that "Loading..." is displayed initially
         expect(screen.getByText('Loading ok...')).toBeInTheDocument();
 
         // Wait for the mock fetch to resolve and the UI to update
         await waitFor(() => {
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.OK);
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.ALL);
 
-            expect(screen.getByText(/OK API: OK/i)).toBeInTheDocument();
-        });
-    });
-
-    it('Should display an error on an unsuccessful fetch', async () => {
-        const mockResponse = {
-            ok: false,
-            status: 500
-        };
-
-        mockFetch.mockResolvedValueOnce(mockResponse);
-
-        render(<PersonOk />);
-
-        expect(screen.getByText('Loading ok...')).toBeInTheDocument();
-
-        await waitFor(() => {
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.OK);
-
-            expect(screen.getByText(/OK API HTTP error: 500/i)).toBeInTheDocument();
+            expect(screen.getByText(/Quote API/i)).toBeInTheDocument();
+            expect(screen.getByText(/So easy it is to switch container in #springboot./i)).toBeInTheDocument();
+            expect(screen.getByText(/Really loving Spring Boot, makes stand alone Spring apps easy./i)).toBeInTheDocument();
         });
     });
 });
