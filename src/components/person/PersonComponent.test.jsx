@@ -1,5 +1,5 @@
 /*
- * (#)QuoteComponent.test.jsx   0.1.0   10/05/2025
+ * (#)PersonComponent.test.jsx  0.1.0   10/05/2025
  *
  * @author  Jonathan Parker
  * @version 0.1.0
@@ -31,13 +31,13 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import {render, screen, waitFor} from '@testing-library/react';
 
-import { API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
 
-import QuoteComponent from './QuoteComponent.jsx';
+import PersonComponent from './PersonComponent.jsx';
 
 const mockFetch = vi.fn();
 
-describe('Quote component', () => {
+describe('Person component', () => {
     beforeEach(() => {
         globalThis.fetch = mockFetch;
     });
@@ -46,21 +46,31 @@ describe('Quote component', () => {
         vi.clearAllMocks();
     });
 
-    it('Should display all quotes on successful fetch', async () => {
-        const mockQuotes = [
+    it('Should display all persons on successful fetch', async () => {
+        const mockPersons = [
             {
-                value: {
-                    id: 9,
-                    text: 'So easy it is to switch container in #springboot.'
-                },
-                type: 'success'
+                status: 'OK',
+                id: 1,
+                lastName: 'Spock',
+                firstName: 'Mister',
+                phoneNumber: '555-123-4567',
+                emailAddress: 'spock@domain.com'
             },
             {
-                value: {
-                    id: 10,
-                    text: 'Really loving Spring Boot, makes stand alone Spring apps easy.'
-                },
-                type: 'success'
+                status: 'OK',
+                id: 2,
+                lastName: 'Kirk',
+                firstName: 'James',
+                phoneNumber: '555-234-5678',
+                emailAddress: 'james@domain.com'
+            },
+            {
+                status: 'OK',
+                id: 3,
+                lastName: 'McCoy',
+                firstName: 'Leonard',
+                phoneNumber: '555-345-6789',
+                emailAddress: 'leonard@domain.com'
             }
         ];
 
@@ -68,22 +78,33 @@ describe('Quote component', () => {
         mockFetch.mockResolvedValueOnce({
             ok: true,
             status: 200,
-            json: () => Promise.resolve(mockQuotes),
+            json: () => Promise.resolve(mockPersons),
         });
 
-        render(<QuoteComponent />);
+        render(<PersonComponent />);
 
         // Check that "Loading..." is displayed initially
         expect(screen.getByText('Loading ok...')).toBeInTheDocument();
 
         // Wait for the mock fetch to resolve and the UI to update
         await waitFor(() => {
-            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.ALL);
+            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PEOPLE);
 
-            expect(screen.getByText(/Quote API/i)).toBeInTheDocument();
-            expect(screen.getByText(/So easy it is to switch container in #springboot./i)).toBeInTheDocument();
-            expect(screen.getByText(/Really loving Spring Boot, makes stand alone Spring apps easy./i)).toBeInTheDocument();
-            expect(screen.getByText(/Quote ID:/i)).toBeInTheDocument();
+            expect(screen.getByText(/Person API/i)).toBeInTheDocument();
+
+            expect(screen.getByRole('row', {
+                name: /1 Mister Spock 555-123-4567/i
+            })).toBeInTheDocument();
+
+            expect(screen.getByRole('row', {
+                name: /2 James Kirk 555-234-5678/i
+            })).toBeInTheDocument();
+
+            expect(screen.getByRole('row', {
+                name: /3 Leonard McCoy 555-345-6789/i
+            })).toBeInTheDocument();
+
+            // expect(screen.getAllByText(/Person ID:/i)).toBeInTheDocument();
         });
     });
 });
