@@ -93,18 +93,20 @@ describe('Person component', () => {
             expect(screen.getByText(/Person API/i)).toBeInTheDocument();
 
             expect(screen.getByRole('row', {
-                name: /1 Mister Spock 555-123-4567/i
+                name: /1 Mister Spock 555-123-4567 spock@domain.com/i
             })).toBeInTheDocument();
 
             expect(screen.getByRole('row', {
-                name: /2 James Kirk 555-234-5678/i
+                name: /2 James Kirk 555-234-5678 james@domain.com/i
             })).toBeInTheDocument();
 
             expect(screen.getByRole('row', {
-                name: /3 Leonard McCoy 555-345-6789/i
+                name: /3 Leonard McCoy 555-345-6789 leonard@domain.com/i
             })).toBeInTheDocument();
 
-            // expect(screen.getAllByText(/Person ID:/i)).toBeInTheDocument();
+            const personIdLabels = screen.getAllByText('Person ID:');
+
+            expect(personIdLabels).toHaveLength(2);
         });
     });
 });
