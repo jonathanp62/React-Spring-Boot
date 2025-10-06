@@ -60,8 +60,11 @@ const QuoteComponent = () => {
                     const result = await response.json();
 
                     setQuotes(result);
-                } else if (!response.ok) {
-                    setError(`All API HTTP error: ${response.status}`);
+                } else {
+                    const messageText = `All API HTTP error: ${response.status}`;
+
+                    setError(messageText);
+                    console.log(messageText);
                 }
             } catch (e) {
                 setError(e.message);

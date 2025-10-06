@@ -109,4 +109,25 @@ describe('Person component', () => {
             expect(personIdLabels).toHaveLength(2);
         });
     });
+
+    it('Should display a message when an error occurs', async () => {
+        const mockMessage = 'People API HTTP error: 500';
+
+        // Mock a failed fetch response
+        mockFetch.mockResolvedValueOnce({
+            ok: false,
+            status: 500,
+            text: () => Promise.resolve(mockMessage),
+        });
+
+        render(<PersonComponent />);
+
+        await waitFor(() => {
+            // Assert that fetch was called correctly using GET method
+            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PEOPLE);
+
+            // Assert that the error message is displayed
+            expect(screen.getByText('Error: People API HTTP error: 500')).toBeInTheDocument();
+        });
+    });
 });

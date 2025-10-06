@@ -65,8 +65,11 @@ const PersonComponent = () => {
                     const result = await response.json();
 
                     setPeople(result);
-                } else if (!response.ok) {
-                    setError(`People API HTTP error: ${response.status}`);
+                } else {
+                    const messageText = `People API HTTP error: ${response.status}`;
+
+                    setError(messageText);
+                    console.log(messageText);
                 }
             } catch (e) {
                 setError(e.message);

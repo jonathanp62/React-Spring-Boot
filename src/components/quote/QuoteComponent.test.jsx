@@ -86,4 +86,25 @@ describe('Quote component', () => {
             expect(screen.getByText(/Quote ID:/i)).toBeInTheDocument();
         });
     });
+
+    it('Should display a message when an error occurs', async () => {
+        const mockMessage = 'All API HTTP error: 500';
+
+        // Mock a failed fetch response
+        mockFetch.mockResolvedValueOnce({
+            ok: false,
+            status: 500,
+            text: () => Promise.resolve(mockMessage),
+        });
+
+        render(<QuoteComponent />);
+
+        await waitFor(() => {
+            // Assert that fetch was called correctly using GET method
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.ALL);
+
+            // Assert that the error message is displayed
+            expect(screen.getByText('Error: All API HTTP error: 500')).toBeInTheDocument();
+        });
+    });
 });
