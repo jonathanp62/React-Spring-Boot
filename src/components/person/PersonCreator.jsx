@@ -78,7 +78,7 @@ const PersonCreator = ({ onRefresh }) => {
                     console.log(`Person created: ${person.firstName} ${person.lastName}`);
                     onRefresh();
                 } else {
-                    setError(`HTTP error! status: ${response.status}`);
+                    setError(`HTTP error: Status: ${response.status}`);
                 }
             } catch (e) {
                 setError(e.message);
