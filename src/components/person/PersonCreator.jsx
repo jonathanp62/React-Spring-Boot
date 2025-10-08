@@ -100,7 +100,9 @@ const PersonCreator = ({ onRefresh }) => {
                     <tr>
                         <td>Last Name:</td>
                         <td>
+                            <label htmlFor={ 'lastName' } className="visually-hidden">Edit last name</label>
                             <input
+                                id="lastName"
                                 name="lastName"
                                 type="text"
                                 value={formData.lastName}
@@ -111,7 +113,9 @@ const PersonCreator = ({ onRefresh }) => {
                     <tr>
                         <td>First Name:</td>
                         <td>
+                            <label htmlFor={ 'firstName' } className="visually-hidden">Edit first name</label>
                             <input
+                                id="firstName"
                                 name="firstName"
                                 type="text"
                                 value={formData.firstName}
@@ -122,7 +126,9 @@ const PersonCreator = ({ onRefresh }) => {
                     <tr>
                         <td>Email Address:</td>
                         <td>
+                            <label htmlFor={ 'emailAddress' } className="visually-hidden">Edit email address</label>
                             <input
+                                id="emailAddress"
                                 name="emailAddress"
                                 type="email"
                                 value={formData.emailAddress}
@@ -133,7 +139,9 @@ const PersonCreator = ({ onRefresh }) => {
                     <tr>
                         <td>Phone Number:</td>
                         <td>
+                            <label htmlFor={ 'phoneNumber' } className="visually-hidden">Edit phone number</label>
                             <input
+                                id="phoneNumber"
                                 name="phoneNumber"
                                 type="tel"
                                 value={formData.phoneNumber}
