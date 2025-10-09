@@ -59,7 +59,10 @@ const PersonDeleter = ({ onRefresh }) => {
                 } else if (response.status === 404) {
                     setMessage(`Person ${personId} not found`);
                 } else {
-                    console.error(`HTTP error! status: ${response.status}`);
+                    const messageText = `HTTP error: Status: ${response.status}`;
+
+                    setMessage(messageText);
+                    console.error(messageText);
                 }
             } catch (e) {
                 console.error(e);
