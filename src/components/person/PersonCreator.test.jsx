@@ -29,10 +29,10 @@
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_PERSON_ENDPOINTS } from "../../constants/api.jsx";
 
 import PersonCreator from './PersonCreator';
 
@@ -151,5 +151,82 @@ describe('Person creator component', () => {
 
         // Assert that console.log was called with the specific message
         expect(logSpy).toHaveBeenCalledWith(`Person created: ${mockPerson.firstName} ${mockPerson.lastName}`);
+    });
+
+    it('Should display a message when an error occurs', async () => {
+        const user = userEvent.setup();
+
+        // Mock the onRefresh function
+        const mockOnRefresh = vi.fn();
+
+        const mockMessage = 'HTTP error: Status: 500';
+
+        // Mock a failed fetch response
+        mockFetch.mockResolvedValueOnce({
+            ok: false,
+            status: 500,
+            text: () => Promise.resolve(mockMessage),
+        });
+
+        render(<PersonCreator onRefresh={mockOnRefresh} />);
+
+        // Get the form fields
+        const lastNameInput = screen.getByRole('textbox', {
+            name: /Edit last name/i
+        });
+
+        const firstNameInput = screen.getByRole('textbox', {
+            name: /Edit first name/i
+        });
+
+        const emailAddressInput = screen.getByRole('textbox', {
+            name: /Edit email address/i
+        });
+
+        const phoneNumberInput = screen.getByRole('textbox', {
+            name: /Edit phone number/i
+        });
+
+        const createButton = screen.getByRole('button', {
+            name: /Create/i
+        });
+
+        // Populate the form fields
+        await user.type(lastNameInput, 'Uhura');
+        await user.type(firstNameInput, 'Nyota');
+        await user.type(emailAddressInput, 'nyota@domain.com');
+        await user.type(phoneNumberInput, '555-456-7890');
+
+        // Make sure the input controls were successfully populated
+        expect(lastNameInput).toHaveValue('Uhura');
+        expect(firstNameInput).toHaveValue('Nyota');
+        expect(emailAddressInput).toHaveValue('nyota@domain.com');
+        expect(phoneNumberInput).toHaveValue('555-456-7890');
+
+        // Submit the form
+        await user.click(createButton);
+
+        const newPerson = {
+            lastName: lastNameInput.value,
+            firstName: firstNameInput.value,
+            phoneNumber: phoneNumberInput.value,
+            emailAddress: emailAddressInput.value
+        };
+
+        expect(mockFetch).toHaveBeenCalledWith(
+            API_PERSON_ENDPOINTS.ROOT,
+            expect.objectContaining({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newPerson),
+            })
+        );
+
+        await waitFor(() => {
+            // Assert that the error message is displayed
+            expect(screen.getByText('Error: HTTP error: Status: 500')).toBeInTheDocument();
+        });
     });
 });
