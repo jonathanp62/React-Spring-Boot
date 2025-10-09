@@ -29,9 +29,10 @@
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_PERSON_ENDPOINTS } from "../../constants/api.jsx";
 
 import PersonFinder from './PersonFinder';
 
@@ -47,6 +48,8 @@ describe('Person finder component', () => {
     });
 
     it('Should display a name on successful fetch', async () => {
+        const user = userEvent.setup();
+
         const mockPerson = {
             status: 'OK',
             id: 2,
@@ -65,15 +68,33 @@ describe('Person finder component', () => {
 
         render(<PersonFinder />);
 
-        // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '2' } });
+        // Get the form fields
+        const personIdInput = screen.getByRole('textbox', {
+            name: /Person ID:/i
+        });
+
+        const findButton = screen.getByRole('button', {
+            name: /Find/i
+        });
+
+        /*
+        screen.debug(personIdInput);
+        screen.debug(findButton);
+         */
+
+        const personID = '2';
+
+        // Populate the form field
+        await user.type(personIdInput, personID);
+
+        expect(personIdInput).toHaveValue(personID);
 
         // Submit the form
-        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+        await user.click(findButton);
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(2));
+            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(personID));
 
             // Assert that the found person's name is displayed
             expect(screen.getByText('James Kirk')).toBeInTheDocument();
@@ -81,6 +102,8 @@ describe('Person finder component', () => {
     });
 
     it('Should display a message when a person is not found', async () => {
+        const user = userEvent.setup();
+
         const mockMessage = 'Person 0 not found';
 
         // Mock a not found fetch response
@@ -92,15 +115,28 @@ describe('Person finder component', () => {
 
         render(<PersonFinder />);
 
-        // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '0' } });
+        // Get the form fields
+        const personIdInput = screen.getByRole('textbox', {
+            name: /Person ID:/i
+        });
+
+        const findButton = screen.getByRole('button', {
+            name: /Find/i
+        });
+
+        const personID = '0';
+
+        // Populate the form field
+        await user.type(personIdInput, personID);
+
+        expect(personIdInput).toHaveValue(personID);
 
         // Submit the form
-        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+        await user.click(findButton);
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(0));
+            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(personID));
 
             // Assert that the not found message is displayed
             expect(screen.getByText('Person 0 not found')).toBeInTheDocument();
@@ -108,6 +144,8 @@ describe('Person finder component', () => {
     });
 
     it('Should display a message when an error occurs', async () => {
+        const user = userEvent.setup();
+
         const mockMessage = 'HTTP error: Status: 500';
 
         // Mock a failed fetch response
@@ -119,15 +157,28 @@ describe('Person finder component', () => {
 
         render(<PersonFinder />);
 
-        // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Person ID:/i), { target: { value: '1' } });
+        // Get the form fields
+        const personIdInput = screen.getByRole('textbox', {
+            name: /Person ID:/i
+        });
+
+        const findButton = screen.getByRole('button', {
+            name: /Find/i
+        });
+
+        const personID = '1';
+
+        // Populate the form field
+        await user.type(personIdInput, personID);
+
+        expect(personIdInput).toHaveValue(personID);
 
         // Submit the form
-        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+        await user.click(findButton);
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(1));
+            expect(mockFetch).toHaveBeenCalledWith(API_PERSON_ENDPOINTS.PERSON_BY_ID(personID));
 
             // Assert that the error message is displayed
             expect(screen.getByText('HTTP error: Status: 500')).toBeInTheDocument();

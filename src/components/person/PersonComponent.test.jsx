@@ -29,9 +29,9 @@
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import {render, screen, waitFor} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_PERSON_ENDPOINTS } from "../../constants/api.jsx";
 
 import PersonComponent from './PersonComponent.jsx';
 

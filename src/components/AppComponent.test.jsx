@@ -30,7 +30,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { test, expect } from 'vitest';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import AppComponent from './AppComponent';
 
