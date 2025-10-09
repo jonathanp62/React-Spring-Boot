@@ -29,7 +29,7 @@
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
@@ -39,12 +39,20 @@ import PersonCreator from './PersonCreator';
 const mockFetch = vi.fn();
 
 describe('Person creator component', () => {
+    let logSpy;
+
     beforeEach(() => {
+        // Before each test, create the spy and suppress the output
+        logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
         globalThis.fetch = mockFetch;
     });
 
     afterEach(() => {
         vi.clearAllMocks();
+
+        // After each test, restore the original console.log
+        logSpy.mockRestore();
     });
 
     it('Should successfully create a new person', async () => {
@@ -134,5 +142,14 @@ describe('Person creator component', () => {
                 body: JSON.stringify(newPerson),
             })
         );
+
+        // Assert that console.log was called
+        expect(logSpy).toHaveBeenCalled();
+
+        // Assert that console.log was called exactly once
+        expect(logSpy).toHaveBeenCalledTimes(1);
+
+        // Assert that console.log was called with the specific message
+        expect(logSpy).toHaveBeenCalledWith(`Person created: ${mockPerson.firstName} ${mockPerson.lastName}`);
     });
 });
