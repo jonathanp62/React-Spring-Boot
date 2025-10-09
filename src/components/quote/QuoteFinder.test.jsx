@@ -29,9 +29,10 @@
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+import { API_QUOTE_ENDPOINTS } from "../../constants/api.jsx";
 
 import QuoteFinder from './QuoteFinder';
 
@@ -47,6 +48,8 @@ describe('Quote finder component', () => {
     });
 
     it('Should display a quote on successful fetch', async () => {
+        const user = userEvent.setup();
+
         const mockQuote = {
             value: {
                 id: 9,
@@ -64,15 +67,33 @@ describe('Quote finder component', () => {
 
         render(<QuoteFinder />);
 
-        // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Quote ID:/i), { target: { value: '9' } });
+        // Get the form fields
+        const quoteIdInput = screen.getByRole('textbox', {
+            name: /Quote ID:/i
+        });
+
+        const findButton = screen.getByRole('button', {
+            name: /Find/i
+        });
+
+        /*
+        screen.debug(quoteIdInput);
+        screen.debug(findButton);
+         */
+
+        const quoteID = '9';
+
+        // Populate the form field
+        await user.type(quoteIdInput, quoteID);
+
+        expect(quoteIdInput).toHaveValue(quoteID);
 
         // Submit the form
-        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+        await user.click(findButton);
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(9));
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(quoteID));
 
             // Assert that the found quote is displayed
             expect(screen.getByText('So easy it is to switch container in #springboot.')).toBeInTheDocument();
@@ -80,6 +101,7 @@ describe('Quote finder component', () => {
     });
 
     it('Should display a message when a quote is not found', async () => {
+        const user = userEvent.setup();
         const mockMessage = 'Quote 0 not found';
 
         // Mock a not found fetch response
@@ -91,15 +113,28 @@ describe('Quote finder component', () => {
 
         render(<QuoteFinder />);
 
-        // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Quote ID:/i), { target: { value: '0' } });
+        // Get the form fields
+        const quoteIdInput = screen.getByRole('textbox', {
+            name: /Quote ID:/i
+        });
+
+        const findButton = screen.getByRole('button', {
+            name: /Find/i
+        });
+
+        const quoteID = '0';
+
+        // Populate the form field
+        await user.type(quoteIdInput, quoteID);
+
+        expect(quoteIdInput).toHaveValue(quoteID);
 
         // Submit the form
-        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+        await user.click(findButton);
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
-            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(0));
+            expect(mockFetch).toHaveBeenCalledWith(API_QUOTE_ENDPOINTS.QUOTE_BY_ID(quoteID));
 
             // Assert that the not found message is displayed
             expect(screen.getByText('Quote 0 not found')).toBeInTheDocument();
@@ -107,6 +142,7 @@ describe('Quote finder component', () => {
     });
 
     it('Should display a message when an error occurs', async () => {
+        const user = userEvent.setup();
         const mockMessage = 'HTTP error: Status: 500';
 
         // Mock a failed fetch response
@@ -118,11 +154,24 @@ describe('Quote finder component', () => {
 
         render(<QuoteFinder />);
 
-        // Populate the form fields
-        fireEvent.change(screen.getByLabelText(/Quote ID:/i), { target: { value: '9' } });
+        // Get the form fields
+        const quoteIdInput = screen.getByRole('textbox', {
+            name: /Quote ID:/i
+        });
+
+        const findButton = screen.getByRole('button', {
+            name: /Find/i
+        });
+
+        const quoteID = '9';
+
+        // Populate the form field
+        await user.type(quoteIdInput, quoteID);
+
+        expect(quoteIdInput).toHaveValue(quoteID);
 
         // Submit the form
-        fireEvent.submit(screen.getByRole('button', { name: /Find/i }));
+        await user.click(findButton);
 
         await waitFor(() => {
             // Assert that fetch was called correctly using GET method
