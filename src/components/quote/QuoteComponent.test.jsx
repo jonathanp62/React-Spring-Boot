@@ -29,9 +29,9 @@
  */
 
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import {render, screen, waitFor} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
-import { API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+import { API_QUOTE_ENDPOINTS } from "../../constants/api.jsx";
 
 import QuoteComponent from './QuoteComponent.jsx';
 
