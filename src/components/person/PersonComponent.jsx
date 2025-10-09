@@ -37,7 +37,7 @@ import PersonDeleter from "./PersonDeleter.jsx";
 import PersonFinder from "./PersonFinder.jsx";
 import PersonOk from "./PersonOk.jsx";
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_PERSON_ENDPOINTS } from "../../constants/api.jsx";
 
 /**
  * The person component.

@@ -36,7 +36,7 @@ import QuoteFinder from "./QuoteFinder.jsx";
 import QuoteOk from "./QuoteOk.jsx";
 import QuoteRandom from "./QuoteRandom.jsx";
 
-import {API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+import { API_QUOTE_ENDPOINTS } from "../../constants/api.jsx";
 
 /**
  * The quote component.

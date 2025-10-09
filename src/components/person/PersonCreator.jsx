@@ -32,7 +32,7 @@ import "../styles/Tables.css";
 
 import React, { useState } from "react";
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_PERSON_ENDPOINTS } from "../../constants/api.jsx";
 
 /**
  * The person creator component.

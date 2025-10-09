@@ -30,7 +30,7 @@
 
 import React, { useState } from "react";
 
-import { API_PERSON_ENDPOINTS} from "../../constants/api.jsx";
+import { API_PERSON_ENDPOINTS } from "../../constants/api.jsx";
 
 /**
  * The person finder component.

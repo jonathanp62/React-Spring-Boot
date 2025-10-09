@@ -30,7 +30,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import {API_QUOTE_ENDPOINTS} from "../../constants/api.jsx";
+import { API_QUOTE_ENDPOINTS } from "../../constants/api.jsx";
 
 /**
  * The quote ok component.
